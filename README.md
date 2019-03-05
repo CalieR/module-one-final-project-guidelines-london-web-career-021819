@@ -64,3 +64,4 @@ User stories:
 1. User can enter their name
 2. User can select a superhero
 3. User can view stats about their chosen superhero
+4. User can add cards to their deck (collection)
