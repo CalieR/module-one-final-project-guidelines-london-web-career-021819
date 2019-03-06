@@ -16,7 +16,7 @@ class Users < ActiveRecord::Base
     end
   end
 
-  def check_collection
+  def check_collection # .count on this array to get total cards for user
     card_ids = UserCards.select {|card| card["user_id"] == self.id}
       if card_ids == []
         puts "Your collection is empty"
@@ -44,6 +44,16 @@ class Users < ActiveRecord::Base
     else # if del is falsy/nil
       puts "Not a valid selection - This card isn't in your collection"
       delete_card
+    end
+  end
+
+  def cards_left_to_collect # add to menu
+    card_ids = UserCards.select {|card| card["user_id"] == self.id}
+    remaining = Cards.all.count - card_ids.map { |card| card["card_id"] }.uniq.count
+    if remaining == Cards.all.count
+      puts "Congratulations, you have completed the Superhero card album!!"
+    else
+      puts "You still have #{remaining} cards left to collect..."
     end
   end
 

@@ -27,19 +27,23 @@ end
 
 def menu(search_name)
   prompt = TTY::Prompt.new
-  choices = [{name: 'View my collection'},
+  choices = [{name: 'View cards in my collection'},
   {name: 'Add new cards'},
-  {name: 'Delete cards from colection'},
+  {name: 'Delete cards from my collection'},
+  {name: 'Collection status'},
   {name: 'Exit'}]
   answer = prompt.select("What would you like to do?", choices, cycle: true)
   if answer == 'Add new cards'
     search_name.choose_and_add_card_to_user_deck
     menu(search_name)
-  elsif answer == 'View my collection'
+  elsif answer == 'View cards in my collection'
     search_name.check_collection
     menu(search_name)
-  elsif answer == 'Delete cards from colection'
+  elsif answer == 'Delete cards from my colection'
     search_name.delete_card
+    menu(search_name)
+  elsif answer == 'Collection status'
+    search_name.cards_left_to_collect
     menu(search_name)
   elsif answer == 'Exit'
     puts "Bye bye!!"
