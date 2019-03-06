@@ -1,10 +1,7 @@
 require_relative '../config/environment'
-require_relative './methods.rb'
-require_all 'app'
-
-greet
-user = create_user
-user.choose_and_add_card_to_user_deck
+prompt = TTY::Prompt.new
 
 
-# puts "HELLO WORLD"
+
+
+menu

@@ -2,7 +2,9 @@ require 'bundler'
 Bundler.require
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
-require_all 'lib'
+ActiveRecord::Base.logger = false
+
 
 require_all 'app'
-require_all 'bin'
+require_all 'bin/methods.rb'
+require 'tty-prompt'
