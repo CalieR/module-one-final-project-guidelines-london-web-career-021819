@@ -33,15 +33,21 @@ class Users < ActiveRecord::Base
   end
 
   def delete_card
-    puts "What is the id of the card you want to delete?"
+    check_collection
+    puts "What is the number of the card you want to delete?"
     cid = gets.chomp
+    # cid must match an id in that users cards
     del = UserCards.find_by user_id: self.id, card_id: cid
-    del.destroy
-    puts "#{(Cards.find_by id: del["card_id"])["name"].upcase} was deleted from your collection!"
+    if del
+      del.destroy
+      puts "#{(Cards.find_by id: del["card_id"])["name"].upcase} was deleted from your collection!"
+    else # if del is falsy/nil
+      puts "Not a valid selection - This card isn't in your collection"
+      delete_card
+    end
   end
 
-
-end
+end # end of class
 
 # binding.pry
 0
