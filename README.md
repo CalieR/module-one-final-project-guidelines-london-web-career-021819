@@ -58,10 +58,12 @@ Projects need to be approved prior to launching into them, so take some time to 
 ActiveRecord::Base.logger = nil
 ```
 ------------------------------------------------------------------------------------
+Calie and Manu: Superhero Card Collection
 
 User stories:
 
 1. User can enter their name
-2. User can select a superhero
-3. User can view stats about their chosen superhero
-4. User can add cards to their deck (collection)
+2. User can select a superhero and view their stats
+4. User can add cards to their collection
+5. User can delete cards from their collection
+6. User can see how many cards they have in their collection

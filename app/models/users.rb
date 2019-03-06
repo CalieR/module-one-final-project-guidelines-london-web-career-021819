@@ -32,6 +32,7 @@ class Users < ActiveRecord::Base
       end
   end
 
+  # currently escapes game when called from menu
   def delete_card
     check_collection
     puts "What is the number of the card you want to delete?"

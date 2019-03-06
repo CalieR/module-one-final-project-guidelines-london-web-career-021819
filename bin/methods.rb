@@ -39,7 +39,7 @@ def menu(search_name)
   elsif answer == 'View cards in my collection'
     search_name.check_collection
     menu(search_name)
-  elsif answer == 'Delete cards from my colection'
+  elsif answer == 'Delete cards from my collection'
     search_name.delete_card
     menu(search_name)
   elsif answer == 'Collection status'
