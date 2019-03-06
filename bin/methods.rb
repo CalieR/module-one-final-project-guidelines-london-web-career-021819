@@ -1,10 +1,8 @@
 require_relative '../config/environment'
 require 'pry'
-# require 'artii'
 
 
 def title
-  # a = Artii::Base.new
   font = TTY::Font.new(:standard)
   pastel = Pastel.new
   puts "====================================================================="
@@ -20,6 +18,10 @@ def greeting
   name = prompt.ask('Please enter your username?') { |q| q.modify :up }
   search_name = Users.find_or_create_by(username: name)
   puts "Hello #{name}"
+  supername = Faker::Superhero.name.upcase
+  superpower = Faker::Superhero.power.upcase
+  puts "Today you'll be known as #{supername}..."
+  puts "...your super power is #{superpower}!!!"
   search_name
 end
 

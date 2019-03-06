@@ -19,6 +19,8 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     equatable (0.5.0)
+    faker (1.9.3)
+      i18n (>= 0.7)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.8.1)
@@ -88,6 +90,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   artii
+  faker
   json
   lolize
   pry

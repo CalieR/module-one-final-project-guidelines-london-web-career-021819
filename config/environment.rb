@@ -8,3 +8,4 @@ ActiveRecord::Base.logger = false
 require_all 'app'
 require_all 'bin/methods.rb'
 require 'tty-prompt'
+require 'faker'

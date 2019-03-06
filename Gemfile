@@ -13,3 +13,4 @@ gem "tty-prompt"
 gem "tty-font"
 gem 'lolize'
 gem 'artii'
+gem 'faker'
