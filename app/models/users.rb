@@ -9,6 +9,7 @@ class Users < ActiveRecord::Base
     response = prompt.select('Do you want to add this card to your collection?', %w(Yes No))
     if response == "Yes"
       UserCards.create(user_id: self.id, card_id: card.id)
+      # increment the users card count by 1?
     end
     response = prompt.select('Do you want to look for another card?', %w(Yes No))
     if response == "Yes"
@@ -20,6 +21,7 @@ class Users < ActiveRecord::Base
     card_ids = UserCards.select {|card| card["user_id"] == self.id}
       if card_ids == []
         puts "Your collection is empty"
+        puts ""
       else
         puts "-----------------------------------------------------------------------------------"
         puts "----- YOU HAVE #{card_ids.length} CARD(S) IN YOUR COLLECTION ---------------------------------------"
@@ -42,19 +44,22 @@ class Users < ActiveRecord::Base
     if del
       del.destroy
       puts "#{(Cards.find_by id: del["card_id"])["name"].upcase} was deleted from your collection!"
+      puts ""
     else # if del is falsy/nil
       puts "Not a valid selection - This card isn't in your collection"
       delete_card
     end
   end
 
-  def cards_left_to_collect # add to menu
+  def cards_left_to_collect
     card_ids = UserCards.select {|card| card["user_id"] == self.id}
     remaining = Cards.all.count - card_ids.map { |card| card["card_id"] }.uniq.count
-    if remaining == Cards.all.count
+    if remaining == 0
+      # fix this
       puts "Congratulations, you have completed the Superhero card album!!"
     else
       puts "You still have #{remaining} cards left to collect..."
+      puts ""
     end
   end
 
