@@ -15,31 +15,33 @@ end
 
 def greeting
   prompt = TTY::Prompt.new
-  name = prompt.ask('Please enter your username?') { |q| q.modify :up }
+  name = prompt.ask('Please enter your username...') { |q| q.modify :up }
   search_name = Users.find_or_create_by(username: name)
   puts "Hello #{name}"
+  puts
   supername = Faker::Superhero.name.upcase
   superpower = Faker::Superhero.power.upcase
   puts "Today you'll be known as #{supername}..."
   puts "...your super power is #{superpower}!!!"
+  puts
   search_name
 end
 
 def menu(search_name)
   prompt = TTY::Prompt.new
-  choices = [{name: 'View cards in my collection'},
-  {name: 'Add new cards'},
+  choices = [{name: 'View my cards'},
+  {name: 'Add new cards to my collection'},
   {name: 'Delete cards from my collection'},
   {name: 'Collection status'},
   {name: 'Exit'}]
   answer = prompt.select("What would you like to do?", choices, cycle: true)
-  if answer == 'Add new cards'
+  if answer == 'Add new cards to my collection'
     search_name.choose_and_add_card_to_user_deck
     menu(search_name)
-  elsif answer == 'View cards in my collection'
+  elsif answer == 'View my cards'
     search_name.check_collection
     menu(search_name)
-  elsif answer == 'Delete cards from my colection'
+  elsif answer == 'Delete cards from my collection'
     search_name.delete_card
     menu(search_name)
   elsif answer == 'Collection status'
@@ -49,20 +51,6 @@ def menu(search_name)
     puts "Bye bye!!"
   end
 end
-
-
-# def choose_hero
-#   puts "Which superhero would you like to read about?"
-#   input = gets.chomp
-#   binding.pry
-#   choice = Cards.find_by(name: input)
-#   if !choice
-#     puts "Character not found"
-#     choose_hero
-#   else
-#     display_card_details(choice)
-#   end
-# end
 
 def choose_hero
   prompt = TTY::Prompt.new
