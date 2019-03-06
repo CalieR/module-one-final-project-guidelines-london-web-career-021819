@@ -7,26 +7,35 @@ class Users < ActiveRecord::Base
   def choose_and_add_card_to_user_deck
     prompt = TTY::Prompt.new
     card = choose_hero
-    prompt.select('Do you want to add this card to your collection?', %w(Yes No))
+    response = prompt.select('Do you want to add this card to your collection?', %w(Yes No))
     # puts "Do you want to add this card to your collection?"
     # puts "Enter Y or N only"
     # response = gets.chomp
-    # if response == "Y"
-    #   UserCards.create(user_id: self.id, card_id: card.id)
-    # end
+    if response == "Yes"
+      UserCards.create(user_id: self.id, card_id: card.id)
+    end
+    response = prompt.select('Do you want to look for another card?', %w(Yes No))
     # puts "Do you want to look for another card?"
     # response = gets.chomp
-    # if response == "Y"
-    #   self.choose_and_add_card_to_user_deck
-    # end
+    if response == "Yes"
+      self.choose_and_add_card_to_user_deck
+    end
   end
 
   def check_collection
     card_ids = UserCards.select {|card| card["user_id"] == self.id}
-    card_ids.each do |card|
-      cards = Cards.find_by(id: card["card_id"])
-      puts "card number: #{cards["id"]}, name: #{cards["name"]}, intel: #{cards["intelligence"]}"
-    end
+      if card_ids == []
+        puts "Your collection is empty"
+      else
+        puts "-----------------------------------------------------------------------------------"
+        puts "----- YOU HAVE #{card_ids.length} CARD(S) IN YOUR COLLECTION ---------------------------------------"
+        puts "-----------------------------------------------------------------------------------"
+        card_ids.each do |card|
+          cards = Cards.find_by(id: card["card_id"])
+          puts "|No: #{cards["id"]}|Name: #{cards["name"].upcase}   |INT: #{cards["intelligence"]}|STR: #{cards["strength"]}|SPE: #{cards["speed"]}|DUR: #{cards["durability"]}|POW: #{cards["power"]}|COM: #{cards["combat"]}"
+        end
+        puts "-----------------------------------------------------------------------------------"
+      end
   end
 
   def delete_card
@@ -34,7 +43,7 @@ class Users < ActiveRecord::Base
     cid = gets.chomp
     del = UserCards.find_by user_id: self.id, card_id: cid
     del.destroy
-    puts "#{(Cards.find_by id: del["card_id"])["name"]} was deleted from your collection!"
+    puts "#{(Cards.find_by id: del["card_id"])["name"].upcase} was deleted from your collection!"
   end
 
 

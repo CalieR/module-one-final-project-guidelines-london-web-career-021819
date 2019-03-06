@@ -4,4 +4,4 @@ prompt = TTY::Prompt.new
 
 
 
-menu
+menu(greeting)
