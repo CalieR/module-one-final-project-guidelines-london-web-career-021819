@@ -1,18 +1,23 @@
 require_relative '../config/environment'
 require 'pry'
-# def greet
-#   puts "Welcome!!"
-#   puts "Please enter your name:"
-#   input = gets.chomp
-#   puts "Hello #{input}!"
-#   input
-# end
+# require 'artii'
 
-# TODO : split into greeting and menu methods
+
+def title
+  # a = Artii::Base.new
+  font = TTY::Font.new(:standard)
+  pastel = Pastel.new
+  puts "====================================================================="
+  puts pastel.yellow.bold(font.write("Superhero"))
+  puts pastel.yellow.bold(font.write("Card"))
+  puts pastel.yellow.bold(font.write("Collection"))
+  puts "====================================================================="
+end
+
+
 def greeting
   prompt = TTY::Prompt.new
-  name = prompt.ask('Please enter your username?') do |q| q.modify :up end
-
+  name = prompt.ask('Please enter your username?') { |q| q.modify :up }
   search_name = Users.find_or_create_by(username: name)
   puts "Hello #{name}"
   search_name
@@ -61,6 +66,7 @@ def choose_hero
   display_card_details(hero)
   hero
 end
+
 #TODO : Format desired output
 
 def display_card_details(choice)

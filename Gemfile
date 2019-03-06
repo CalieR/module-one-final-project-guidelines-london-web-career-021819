@@ -10,3 +10,6 @@ gem "require_all"
 gem "rest-client"
 gem "json"
 gem "tty-prompt"
+gem "tty-font"
+gem 'lolize'
+gem 'artii'

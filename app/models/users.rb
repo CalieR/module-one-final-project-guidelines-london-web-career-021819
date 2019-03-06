@@ -3,20 +3,14 @@ require 'pry'
 class Users < ActiveRecord::Base
   has_many :cards, through: :user_cards
 
-# TODO work out adding card or not based on input
   def choose_and_add_card_to_user_deck
     prompt = TTY::Prompt.new
     card = choose_hero
     response = prompt.select('Do you want to add this card to your collection?', %w(Yes No))
-    # puts "Do you want to add this card to your collection?"
-    # puts "Enter Y or N only"
-    # response = gets.chomp
     if response == "Yes"
       UserCards.create(user_id: self.id, card_id: card.id)
     end
     response = prompt.select('Do you want to look for another card?', %w(Yes No))
-    # puts "Do you want to look for another card?"
-    # response = gets.chomp
     if response == "Yes"
       self.choose_and_add_card_to_user_deck
     end
