@@ -12,7 +12,7 @@ require 'pry'
 def greeting
   prompt = TTY::Prompt.new
   name = prompt.ask('Please enter your username?') do |q| q.modify :up end
-    
+
   search_name = Users.find_or_create_by(username: name)
   puts "Hello #{name}"
   search_name
@@ -27,8 +27,8 @@ def menu(search_name)
   answer = prompt.select("What would you like to do?", choices, cycle: true)
   if answer == 'Add new cards'
     search_name.choose_and_add_card_to_user_deck
-  elsif answer == 'View my collection'
     menu(search_name)
+  elsif answer == 'View my collection'
     search_name.check_collection
     menu(search_name)
   elsif answer == 'Delete cards from colection'
