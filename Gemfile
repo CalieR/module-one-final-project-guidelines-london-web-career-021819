@@ -11,6 +11,9 @@ gem "rest-client"
 gem "json"
 gem "tty-prompt"
 gem "tty-font"
+gem "tty-progressbar"
 gem 'lolize'
 gem 'artii'
 gem 'faker'
+gem 'whirly'
+gem 'paint'
