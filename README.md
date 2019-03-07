@@ -10,9 +10,7 @@ Seed data courtesy of https://www.superheroapi.com/
 ## Install instructions
 
 Fork and clone this repository.
-Run 'bundle install'
-Run 'rake db:migrate'
-Run 'rake db:seed'
+In the terminal, cd to main folder and type 'bash bin/setup.sh'
 
 ### User stories:
 
