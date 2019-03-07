@@ -21,7 +21,7 @@ end
 
 
 delete_null.each do |sup|
-  Cards.create(name: sup["name"],
+  Card.create(name: sup["name"],
     intelligence: sup["powerstats"]["intelligence"],
     strength: sup["powerstats"]["strength"],
     speed: sup["powerstats"]["speed"],

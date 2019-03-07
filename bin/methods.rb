@@ -64,7 +64,10 @@ def menu(search_name)
     search_name.cards_left_to_collect
     menu(search_name)
   elsif answer == 'Exit'
-    puts "Bye bye!!"
+    goodbye
+    sleep(3)
+    title
+    menu(greeting)
   end
 end
 
@@ -76,8 +79,6 @@ def choose_hero
   display_card_details(hero)
   hero
 end
-
-#TODO : Format desired output
 
 def display_card_details(choice)
   puts "====================="

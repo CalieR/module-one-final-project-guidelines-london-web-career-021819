@@ -1,3 +1,50 @@
+------------------------------------------------------------------------------------
+# Calie and Manu: Superhero Card Collection
+
+For our Module 1 project, we have built a card collecting game in the style of the classic Panini sticker album.
+Players can view cards for each individual superhero to see their stats and then add these cards to, or delete them from, their own collection
+
+## Install instructions
+
+Fork and clone this repository.
+
+
+### User stories:
+
+1. User can enter their name (process creates a new collection, or retrieves an existing one)
+2. User can select a superhero and view their stats
+3. User can add cards to their collection
+4. User can delete cards from their collection
+5. User can see how many cards they have in their collection
+6. User can see how many cards they still need to collect
+
+### Stretch goals (ideas for the future)
+
+1. Return a leaderboard showing which users have the most cards
+2. Return a list of which character has the highest score for a particular attribute
+3. Compare your hand to another users hand
+4. Option to receive a pack of 5 random cards within a fixed time period
+5. Make some cards 'special' so they are more difficult to collect
+6. Easter eggs for completing a set of characters (eg. all of the Avengers or all of the Justice League)
+7. Add other categories of cards (eg sports, cars, animals etc)
+8. Build a full-on Top Trumps style game!
+
+
+TODO:
+3.  README.md - install instructions, a contributors guide and a link to the license for your code.
+4. Make sure your project checks off each of the above requirements.
+5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
+    * The video should:
+      - Have an overview of your project.(2 minutes max)
+6. Prepare a presentation to follow your video.(3 minutes max)
+    * Your presentation should:
+      - Describe something you struggled to build, and show us how you ultimately implemented it in your code.
+      - Discuss 3 things you learned in the process of working on this project.
+      - Address, if anything, what you would change or add to what you have today?
+      - Present any code you would like to highlight.   
+7. *OPTIONAL, BUT RECOMMENDED*: Write a blog post about the project and process.
+---------------------------------------------------------------------------------------
+
 # Module One Final Project Guidelines
 
 Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
@@ -52,18 +99,9 @@ Projects need to be approved prior to launching into them, so take some time to 
 
 ---
 ### Common Questions:
-- How do I turn off my SQL logger?
+- How do I turn off my SQL logger? (so you don't see the process every time you run the program, but you can still debug in the console when required)
 ```ruby
-# in config/environment.rb add this line:
-ActiveRecord::Base.logger = nil
+# in config/environment.rb add this line
+# in rakefile is set to Logger.new(STDOUT):
+ActiveRecord::Base.logger = false
 ```
-------------------------------------------------------------------------------------
-Calie and Manu: Superhero Card Collection
-
-User stories:
-
-1. User can enter their name
-2. User can select a superhero and view their stats
-4. User can add cards to their collection
-5. User can delete cards from their collection
-6. User can see how many cards they have in their collection
