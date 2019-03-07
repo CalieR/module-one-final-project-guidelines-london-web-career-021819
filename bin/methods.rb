@@ -21,7 +21,7 @@ def greeting
   end
   search_name = User.find_or_create_by(username: name)
   Whirly.start spinner: "earth" do
-    sleep 3
+    sleep 2
   end
   puts "__________________________________________"
   puts "Hello #{name}"
@@ -48,8 +48,6 @@ def menu(search_name)
     search_name.choose_and_add_card_to_user_deck
     menu(search_name)
   elsif answer == 'View my cards'
-    system('clear')
-    title
     search_name.check_collection
     menu(search_name)
   elsif answer == 'Delete cards from my collection'

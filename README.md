@@ -7,7 +7,9 @@ Players can view cards for each individual superhero to see their stats and then
 ## Install instructions
 
 Fork and clone this repository.
-
+Run 'bundle install'
+Run 'rake db:migrate'
+Run 'rake db:seed'
 
 ### User stories:
 
