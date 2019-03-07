@@ -4,6 +4,11 @@ class User < ActiveRecord::Base
   has_many :user_cards
   has_many :cards, through: :user_cards
 
+
+  # calls 'choose_hero' to display all the cards to the user, and assigns their choice to 'card'
+  # TTY prompt for the yes/no menu
+  # if 'yes', creates a new row in the card table for that specific user_id, assigning them that card_id
+  # asks if user wants to select another card, if they do it calls on itself to offer the choices again (and so on)
   def choose_and_add_card_to_user_deck
     prompt = TTY::Prompt.new
     card = choose_hero
@@ -21,42 +26,44 @@ class User < ActiveRecord::Base
     end
   end
 
+  # gets all the users cards and displays them in number order
+  # also displays count message, depending on whether they have some or none
+  # had to use 'reload' because rails was using cached array, had to force to go back to db and refresh the card for the user.
   def check_collection
     system('clear')
     title
     your_cards = self.reload.cards.sort
       if your_cards == []
-        puts "-----------------------------------------------------------------------------------"
+        puts "====================================================================="
         puts "Your collection is empty"
-        puts "-----------------------------------------------------------------------------------"
+        puts "====================================================================="
       else
-        puts "-----------------------------------------------------------------------------------"
-        puts "----- YOU HAVE #{your_cards.length} CARD(S) IN YOUR COLLECTION --------------------"
-        puts "-----------------------------------------------------------------------------------"
-        # had to add reload because rails was using cached array, had to force to go back to db.
-        # but doesn't refresh card count
+        puts "====================================================================="
+        puts "----- YOU HAVE #{your_cards.length} CARD(S) IN YOUR COLLECTION ------"
+        puts "====================================================================="
         your_cards.each do |card|
-          puts "|No: #{card["id"]}|Name: #{card["name"].upcase}   |INT: #{card["intelligence"]}|STR: #{card["strength"]}|SPE: #{card["speed"]}|DUR: #{card["durability"]}|POW: #{card["power"]}|COM: #{card["combat"]}"
+          puts "|NUMBER: #{card["id"]}   |NAME: #{card["name"].upcase}   |INTELLIGENCE: #{card["intelligence"]}   |STRENGTH: #{card["strength"]}   |SPEED: #{card["speed"]}   |DURABILITY: #{card["durability"]}   |POWER: #{card["power"]}   |COMBAT: #{card["combat"]}"
         end
-        puts "-----------------------------------------------------------------------------------"
+        puts "====================================================================="
       end
   end
 
-
+  # iterates over all the cards for that user, passes resulting array of names to TTY prompt to display choices.
+  # choice from the list of names is stored in selected_card_name
+  # the card object for that choice is stored in selected_card
+  # the UserCard object from that specific user's collection is stored in choice
+  # choice is destroyed if the user chooses yes, confirmation message displayed.
+  # if user decides not to delete, check_collection is called to return to users card list
   def delete_card
     prompt = TTY::Prompt.new
     your_cards = self.cards
     card_names  = your_cards.map { |card| card["name"] }
-    # selected_card_name is the choice from the list
     selected_card_name = prompt.select('Choose a character to delete', card_names, filter: true, cycle: true, help: "(Start typing to filter results)", help_color: :green, active_color: :yellow)
-    # selected card is the object for the name the user chose
     selected_card = Card.find_by(name: selected_card_name)
-    # choice is the card object from that user's collection
     choice = UserCard.find_by user_id: self.id, card_id: selected_card.id
     response = prompt.select("Are you sure you want to delete #{selected_card_name.upcase}?", %w(Yes No))
     if response == "Yes"
       choice.destroy
-      # not destroyig!!
       bar = TTY::ProgressBar.new("Deleting #{selected_card_name.upcase} [:bar]", total: 30)
       30.times do
         sleep(0.05)
@@ -71,17 +78,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  # finds the users cards, removes any duplicates and subtracts that number from total cards (160)
+  # Displays message showing how many cards user still needs to complete colletion.
   def cards_left_to_collect
     card_ids = UserCard.select {|card| card["user_id"] == self.id}
     remaining = Card.all.count - card_ids.map { |card| card["card_id"] }.uniq.count
     if remaining == 0
-      puts "------------------------------------------------------------------"
+      puts "====================================================================="
       puts "Congratulations, you have completed the Superhero card album!!"
-      puts "------------------------------------------------------------------"
+      puts "====================================================================="
     else
-      puts "------------------------------------------------------------------"
+      puts "====================================================================="
       puts "You still have #{remaining} cards left to collect..."
-      puts "------------------------------------------------------------------"
+      puts "====================================================================="
     end
   end
 

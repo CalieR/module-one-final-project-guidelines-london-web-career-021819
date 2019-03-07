@@ -4,6 +4,9 @@
 For our Module 1 project, we have built a card collecting game in the style of the classic Panini sticker album.
 Players can view cards for each individual superhero to see their stats and then add these cards to, or delete them from, their own collection
 
+Seed data courtesy of https://www.superheroapi.com/
+
+
 ## Install instructions
 
 Fork and clone this repository.
@@ -20,11 +23,17 @@ Run 'rake db:seed'
 5. User can see how many cards they have in their collection
 6. User can see how many cards they still need to collect
 
+### What did we learn???
+- It's good to dream big but maybe not in mod1 project week!  We had a goal in mind but after the first day it was obvious we'd need to scale back our plans a little.
+- It is easy to get carried away.  See above!  We split tasks which wasn't a great idea on day 1.  Day 2 we stopped to think, and began pairing properly.  Because we were focussed on doing one thing at a time we actually achieved more, and what we wrote, worked.
+- To quote RailsGuides: "All of the association methods are built around caching, which keeps the result of the most recent query available for further operations. The cache is even shared across methods."
+We found out about this because after deleting a card, it was still showing in our card count.  After a bit of research we fixed this by calling the reload method on that association.
+
 ### Stretch goals (ideas for the future)
 
 1. Return a leaderboard showing which users have the most cards
 2. Return a list of which character has the highest score for a particular attribute
-3. Compare your hand to another users hand
+3. Compare your collection to that of another user
 4. Option to receive a pack of 5 random cards within a fixed time period
 5. Make some cards 'special' so they are more difficult to collect
 6. Easter eggs for completing a set of characters (eg. all of the Avengers or all of the Justice League)
@@ -34,7 +43,6 @@ Run 'rake db:seed'
 
 TODO:
 3.  README.md - install instructions, a contributors guide and a link to the license for your code.
-4. Make sure your project checks off each of the above requirements.
 5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
     * The video should:
       - Have an overview of your project.(2 minutes max)
