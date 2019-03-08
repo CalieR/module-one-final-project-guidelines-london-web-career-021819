@@ -6,7 +6,6 @@ Players can view cards for each individual superhero to see their stats and then
 
 Seed data courtesy of https://www.superheroapi.com/
 
-
 ## Install instructions
 
 Fork and clone this repository.
@@ -16,27 +15,28 @@ In the terminal, cd to main folder and type 'bash bin/setup.sh'
 
 1. User can enter their name (process creates a new collection, or retrieves an existing one)
 2. User can select a superhero and view their stats
-3. User can add cards to their collection
+3. User can add cards to their collection (select one, or receive 5 random)
 4. User can delete cards from their collection
 5. User can see how many cards they have in their collection
 6. User can see how many cards they still need to collect
+7. User can see a leaderboard showing which users have the most cards
 
 ### What did we learn???
+
 - It's good to dream big but maybe not in mod1 project week!  We had a goal in mind but after the first day it was obvious we'd need to scale back our plans a little.
 - It is easy to get carried away.  See above!  We split tasks which wasn't a great idea on day 1.  Day 2 we stopped to think, and began pairing properly.  Because we were focussed on doing one thing at a time we actually achieved more, and what we wrote, worked.
+- Stop to think about how (and why) you are doing something - we spent ages writing a menu, then discovered a gem which would have done a lot of the hard work for us.
 - To quote RailsGuides: "All of the association methods are built around caching, which keeps the result of the most recent query available for further operations. The cache is even shared across methods."
 We found out about this because after deleting a card, it was still showing in our card count.  After a bit of research we fixed this by calling the reload method on that association.
 
 ### Stretch goals (ideas for the future)
 
-1. Return a leaderboard showing which users have the most cards
-2. Return a list of which character has the highest score for a particular attribute
-3. Compare your collection to that of another user
-4. Option to receive a pack of 5 random cards within a fixed time period
-5. Make some cards 'special' so they are more difficult to collect
-6. Easter eggs for completing a set of characters (eg. all of the Avengers or all of the Justice League)
-7. Add other categories of cards (eg sports, cars, animals etc)
-8. Build a full-on Top Trumps style game!
+1. Return a list of which character has the highest score for a particular attribute
+2. Compare your collection to that of another user
+3. Make some cards 'special' so they are more difficult to collect
+4. Easter eggs for completing a set of characters (eg. all of the Avengers or all of the Justice League)
+5. Add other categories of cards (eg sports, cars, animals etc)
+6. Build a full-on Top Trumps style game!
 
 
 
