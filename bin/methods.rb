@@ -39,29 +39,46 @@ end
 def menu(search_name)
   prompt = TTY::Prompt.new
   choices = [{name: 'View my cards'},
-  {name: 'Add new cards to my collection'},
+  {name: 'Add new card to my collection'},
+  {name: 'Open mystery pack (get 5 random cards)'},
   {name: 'Delete cards from my collection'},
   {name: 'Collection status'},
+  {name: 'View Leaderboard'},
   {name: 'Exit'}]
-  answer = prompt.select("What would you like to do?", choices, cycle: true)
-  if answer == 'Add new cards to my collection'
-    system('clear')
+  answer = prompt.select("What would you like to do?", choices, cycle: true, per_page: 10)
+  if answer == 'Add new card to my collection'
     title
     search_name.choose_and_add_card_to_user_deck
+    title
+    menu(search_name)
+  elsif answer == 'Open mystery pack (get 5 random cards)'
+    search_name.open_pack
+    title
     menu(search_name)
   elsif answer == 'View my cards'
+    title
     search_name.check_collection
+    puts "Press enter to return to menu"
+    input = gets.chomp
+    title
     menu(search_name)
   elsif answer == 'Delete cards from my collection'
-    system('clear')
     title
     search_name.check_collection
     search_name.delete_card
+    title
     menu(search_name)
   elsif answer == 'Collection status'
-    system('clear')
     title
     search_name.cards_left_to_collect
+    puts "Press enter to return to menu"
+    input = gets.chomp
+    title
+    menu(search_name)
+  elsif answer == "View Leaderboard"
+    title
+    leaderboard
+    title
     menu(search_name)
   elsif answer == 'Exit'
     goodbye
@@ -85,16 +102,14 @@ end
 
 # prints out all the attributes from the chosen character's card.
 def display_card_details(choice)
-  puts "====================================================================="
-  puts "|  #{choice["name"].upcase}"
-  puts "====================================================================="
-  puts "| INTELLIGENCE:.. #{choice["intelligence"]}"
-  puts "| STRENGTH:...... #{choice["strength"]}"
-  puts "| SPEED:......... #{choice["speed"]}"
-  puts "| DURABILITY:.... #{choice["durability"]}"
-  puts "| POWER:......... #{choice["power"]}"
-  puts "| COMBAT:........ #{choice["combat"]}"
-  puts "====================================================================="
+  table = TTY::Table.new header:[value: choice["name"].upcase, alignment: :center]
+  table << ["INTELLIGENCE: #{choice["intelligence"]}"]
+  table << ["STRENGTH: #{choice["strength"]}"]
+  table << ["SPEED: #{choice["speed"]}"]
+  table << ["DURABILITY: #{choice["durability"]}"]
+  table << ["POWER: #{choice["power"]}"]
+  table << ["COMBAT: #{choice["combat"]}"]
+  puts table.render :unicode, padding: [0,1,0,1]
 end
 
 # font from TTY Font, using Pastel to set the colour and style
@@ -106,4 +121,19 @@ def goodbye
   puts "====================================================================="
   puts pastel.yellow.bold(font.write("Goodbye!"))
   puts "====================================================================="
+end
+
+# shows the 5 players with the most cards in their collection
+def leaderboard
+  scores = {}
+  User.all.map { |person| scores[person.username] = person.cards.count }
+  top5 = scores.sort_by {|k,v| v}.reverse.first(5) # get first however many you want
+  # produces an array of arrays like: ['name', num]
+  table = TTY::Table.new header:[value: "LEADERBOARD", alignment: :center]
+  top5.each do |person|
+    table << ["PLAYER: #{person[0]}, SCORE: #{person[1]}"]
+  end
+  puts table.render :unicode, padding: [0,1,0,1]
+  puts "Press enter to return to menu"
+  input = gets.chomp
 end
