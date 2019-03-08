@@ -43,7 +43,7 @@ def menu(search_name)
   {name: 'Open mystery pack (get 5 random cards)'},
   {name: 'Delete cards from my collection'},
   {name: 'Collection status'},
-  {name: 'View Leaderboard'},
+  {name: 'Top 5 collectors'},
   {name: 'Exit'}]
   answer = prompt.select("What would you like to do?", choices, cycle: true, per_page: 10)
   if answer == 'Add new card to my collection'
@@ -75,7 +75,7 @@ def menu(search_name)
     input = gets.chomp
     title
     menu(search_name)
-  elsif answer == "View Leaderboard"
+  elsif answer == "Top 5 collectors"
     title
     leaderboard
     title
@@ -129,10 +129,8 @@ def leaderboard
   User.all.map { |person| scores[person.username] = person.cards.count }
   top5 = scores.sort_by {|k,v| v}.reverse.first(5) # get first however many you want
   # produces an array of arrays like: ['name', num]
-  table = TTY::Table.new header:[value: "LEADERBOARD", alignment: :center]
-  top5.each do |person|
-    table << ["PLAYER: #{person[0]}, SCORE: #{person[1]}"]
-  end
+  table = TTY::Table.new header:["NAME", "SCORE"]
+  top5.each { |person| table << ["#{person[0]}", "#{person[1]}"] }
   puts table.render :unicode, padding: [0,1,0,1]
   puts "Press enter to return to menu"
   input = gets.chomp
