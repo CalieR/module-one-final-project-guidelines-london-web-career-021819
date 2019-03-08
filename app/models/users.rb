@@ -26,6 +26,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  # get 5 random cards from the cards table, add them to the user's collection
+  def open_pack
+    cards = Card.all.sample(5)
+    cards.each { |card| UserCard.create(user_id: self.id, card_id: card.id)}
+    names = cards.map { |card| card.name }
+    puts "#{names.join(", ").upcase} ...were added to your collection!"
+    sleep(3)
+  end
+
   # gets all the users cards and displays them in number order
   # also displays count message, depending on whether they have some or none
   # had to use 'reload' because rails was using cached array, had to force to go back to db and refresh the card for the user.

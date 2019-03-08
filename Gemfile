@@ -12,6 +12,7 @@ gem "json"
 gem "tty-prompt"
 gem "tty-font"
 gem "tty-progressbar"
+gem "tty-table"
 gem 'lolize'
 gem 'artii'
 gem 'faker'
